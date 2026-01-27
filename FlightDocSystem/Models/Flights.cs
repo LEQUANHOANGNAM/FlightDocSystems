@@ -9,5 +9,7 @@ namespace FlightDocSystem.Models
         public DateTime FlightDate { get; set; }
 
         public ICollection<FlightDocuments> Documents { get; set; }
+
+        public ICollection<FlightAssigment> FlightAssigments { get; set; }
     }
 }
