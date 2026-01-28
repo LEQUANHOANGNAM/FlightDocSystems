@@ -1,14 +1,16 @@
 ﻿using FlightDocSystem.Models;
+using FlightDocSystem.Service;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace FlightDocSystem.Service
+namespace FlightDocSystem.Services.Implementations
 {
     public class JwtService : IJwtService
     {
         private readonly IConfiguration _config;
+
         public JwtService(IConfiguration config)
         {
             _config = config;
@@ -22,6 +24,7 @@ namespace FlightDocSystem.Service
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.Name)
             };
+
             foreach (var permission in permissions)
             {
                 claims.Add(new Claim("permission", permission));

@@ -18,6 +18,7 @@ namespace FlightDocSystem.Models
         public Role Role { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
+
         public ICollection<FlightAssigment> FlightAssigments { get; set; }= new List<FlightAssigment>();
     }
 }
