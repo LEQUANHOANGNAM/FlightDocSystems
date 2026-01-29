@@ -8,6 +8,7 @@ namespace FlightDocSystem.Models
         public int Id { get; set; }
         [NotMapped]
         public IFormFile? Avatar { get; set; } 
+        public string? AvatarPath { get; set; }
         [MaxLength(100)]
         public string FullName { get; set; }
         [MaxLength(100)]

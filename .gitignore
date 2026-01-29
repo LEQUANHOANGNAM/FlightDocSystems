@@ -1,2 +1,5 @@
 ﻿/FlightDocSystem/FlightDocSystem.csproj
 /FlightDocSystem/FlightDocSystem.csproj
+.vs/
+bin/
+obj/
