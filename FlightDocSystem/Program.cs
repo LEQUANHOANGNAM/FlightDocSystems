@@ -3,6 +3,7 @@ using FlightDocSystem.Service;
 using FlightDocSystem.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -39,7 +40,6 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 
-    // 🔥 CHUẨN BEARER
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Bearer {your JWT token}"
+        Description = "Bearer {token}"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -90,12 +90,42 @@ builder.Services
             ClockSkew = TimeSpan.Zero
         };
 
+        // 🔥 CHECK TOKEN REVOKED
         options.Events = new JwtBearerEvents
         {
+            OnTokenValidated = async context =>
+            {
+                var cache = context.HttpContext.RequestServices
+                    .GetRequiredService<IMemoryCache>();
+
+                var db = context.HttpContext.RequestServices
+                    .GetRequiredService<AppDbContext>();
+
+                var token = context.Request.Headers["Authorization"]
+                    .ToString()
+                    .Replace("Bearer ", "");
+
+                // memory
+                if (cache.TryGetValue(token, out _))
+                {
+                    context.Fail("Token revoked");
+                    return;
+                }
+
+                // database
+                var revoked = await db.RevokedTokens
+                    .AnyAsync(x => x.Token == token);
+
+                if (revoked)
+                {
+                    context.Fail("Token revoked");
+                }
+            },
+
             OnAuthenticationFailed = context =>
             {
                 Console.WriteLine("JWT FAILED:");
-                Console.WriteLine(context.Exception.ToString());
+                Console.WriteLine(context.Exception);
                 return Task.CompletedTask;
             }
         };
@@ -112,7 +142,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // ⚠️ PHẢI TRƯỚC Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

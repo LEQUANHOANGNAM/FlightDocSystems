@@ -4,6 +4,7 @@ using FlightDocSystem.Models;
 using FlightDocSystem.Service;
 using FlightDocSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace FlightDocSystem.Services.Implementations
@@ -13,15 +14,18 @@ namespace FlightDocSystem.Services.Implementations
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
         private readonly IJwtService _jwtService;
+        private readonly IMemoryCache _cache;
 
         public AuthService(
             AppDbContext context,
             IConfiguration config,
-            IJwtService jwtService)
+            IJwtService jwtService,
+            IMemoryCache cache)
         {
             _context = context;
             _config = config;
             _jwtService = jwtService;
+            _cache = cache;
         }
 
         public async Task<object> LoginAsync(LoginRequest request)
@@ -56,12 +60,18 @@ namespace FlightDocSystem.Services.Implementations
                 role = user.Role.Name,
                 permissions
             };
-        }   
+        }
+
+        // 🔥 LOGOUT CHUẨN
         public async Task LogoutAsync(string token)
         {
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
 
+            // cache
+            _cache.Set(token, true, jwt.ValidTo - DateTime.UtcNow);
+
+            // db
             var revoked = new RevokedToken
             {
                 Token = token,

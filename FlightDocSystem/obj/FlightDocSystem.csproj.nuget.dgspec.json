@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {}
+    "C:\\Users\\lenam\\source\\repos\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {}
   },
   "projects": {
-    "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {
+    "C:\\Users\\lenam\\source\\repos\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
+        "projectUniqueName": "C:\\Users\\lenam\\source\\repos\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
         "projectName": "FlightDocSystem",
-        "projectPath": "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\obj\\",
+        "projectPath": "C:\\Users\\lenam\\source\\repos\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
+        "packagesPath": "C:\\Users\\lenam\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lenam\\source\\repos\\FlightDocSystems\\FlightDocSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lenam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -100,7 +100,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

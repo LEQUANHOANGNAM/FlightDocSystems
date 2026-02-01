@@ -725,7 +725,7 @@
     "securitySchemes": {
       "Bearer": {
         "type": "http",
-        "description": "Bearer {your JWT token}",
+        "description": "Bearer {token}",
         "scheme": "Bearer",
         "bearerFormat": "JWT"
       }
