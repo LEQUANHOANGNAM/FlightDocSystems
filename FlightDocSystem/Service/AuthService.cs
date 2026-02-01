@@ -1,8 +1,10 @@
 ﻿using FlightDocSystem.Data;
 using FlightDocSystem.Helper;
+using FlightDocSystem.Models;
 using FlightDocSystem.Service;
 using FlightDocSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace FlightDocSystem.Services.Implementations
 {
@@ -12,9 +14,10 @@ namespace FlightDocSystem.Services.Implementations
         private readonly IConfiguration _config;
         private readonly IJwtService _jwtService;
 
-        public AuthService(AppDbContext context,
-                           IConfiguration config,
-                           IJwtService jwtService)
+        public AuthService(
+            AppDbContext context,
+            IConfiguration config,
+            IJwtService jwtService)
         {
             _context = context;
             _config = config;
@@ -53,6 +56,21 @@ namespace FlightDocSystem.Services.Implementations
                 role = user.Role.Name,
                 permissions
             };
+        }   
+        public async Task LogoutAsync(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+
+            var revoked = new RevokedToken
+            {
+                Token = token,
+                ExpiredAt = jwt.ValidTo,
+                RevokedAt = DateTime.UtcNow
+            };
+
+            _context.RevokedTokens.Add(revoked);
+            await _context.SaveChangesAsync();
         }
     }
 }

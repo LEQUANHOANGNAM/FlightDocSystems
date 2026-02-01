@@ -1,6 +1,7 @@
 ﻿
 using FlightDocSystem.Service;
 using FlightDocSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlightDocSystem.Controllers
@@ -29,5 +30,24 @@ namespace FlightDocSystem.Controllers
                 return Unauthorized(ex.Message);
             }
         }
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var token = Request.Headers["Authorization"]
+                .ToString()
+                .Replace("Bearer ", "");
+
+            await _authService.LogoutAsync(token);
+
+            return Ok(new { message = "Đăng xuất thành công" });
+        }
+        [Authorize]
+        [HttpGet("ping")]
+        public IActionResult Ping()
+        {
+            return Ok("JWT OK");
+        }
+
     }
 }

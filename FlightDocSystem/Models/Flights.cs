@@ -1,4 +1,5 @@
 ﻿using FlightDocSystem.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace FlightDocSystem.Models
 {
@@ -10,5 +11,9 @@ namespace FlightDocSystem.Models
 
         public ICollection<FlightDocuments> Documents { get; set; }
         public ICollection<FlightAssigment> FlightAssigments { get; set; }
+        [MaxLength(30)]
+        public string PointOfLoading { get; set; } 
+        [MaxLength(30)]
+        public string PointOfUnLoading { get; set; }
     }
 }

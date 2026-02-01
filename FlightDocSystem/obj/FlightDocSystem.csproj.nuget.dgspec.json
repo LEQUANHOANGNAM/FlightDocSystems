@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MSI\\Desktop\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {}
+    "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MSI\\Desktop\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {
+    "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MSI\\Desktop\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
+        "projectUniqueName": "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
         "projectName": "FlightDocSystem",
-        "projectPath": "C:\\Users\\MSI\\Desktop\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
-        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MSI\\Desktop\\FlightDocSystems\\FlightDocSystem\\obj\\",
+        "projectPath": "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\FlightDocSystem.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\PROJECT\\CSharp\\Alta\\FlightDocSystems\\FlightDocSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
