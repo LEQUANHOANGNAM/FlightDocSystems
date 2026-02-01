@@ -19,6 +19,7 @@ namespace FlightDocSystem.Data
         public DbSet<DocumentFile> DocumentFiles { get; set; }
         public DbSet<FlightAssigment> FlightAssigments { get; set; }
         public DbSet<RevokedToken> RevokedTokens { get; set; }
+        public DbSet<DocumentTemplate> DocumentTemplates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

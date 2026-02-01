@@ -27,7 +27,10 @@ builder.Services.AddScoped<IRoleSVC, RoleSVC>();
 builder.Services.AddScoped<IPermissionSVC, PermissionSVC>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IFlightSvc, FlightSvc>();
-
+builder.Services.AddScoped<IFileStorageService, FileStorageService>();
+builder.Services.AddScoped<IFlightDocumentService, FlightDocumentService>();
+builder.Services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();    
+builder.Services.AddScoped<IFlightAssignmentService,FlightAssignmentService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddAuthorization();
 

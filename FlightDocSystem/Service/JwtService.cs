@@ -23,6 +23,7 @@ namespace FlightDocSystem.Services.Implementations
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim("userId",user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Role.Name)
             };
 
