@@ -16,6 +16,350 @@
     "ReturnTypes": []
   },
   {
+<<<<<<< HEAD
+=======
+    "ContainingType": "FlightDocSystem.Controllers.AuthController",
+    "Method": "Logout",
+    "RelativePath": "api/auth/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.AuthController",
+    "Method": "Ping",
+    "RelativePath": "api/auth/ping",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentCategoriesController",
+    "Method": "GetAll",
+    "RelativePath": "api/DocumentCategories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentCategoriesController",
+    "Method": "Create",
+    "RelativePath": "api/DocumentCategories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FlightDocSystem.ViewModels.CreateDocumentCategoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentCategoriesController",
+    "Method": "Disable",
+    "RelativePath": "api/DocumentCategories/{id}/disable",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentTemplateController",
+    "Method": "GetAll",
+    "RelativePath": "api/DocumentTemplate",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentTemplateController",
+    "Method": "Create",
+    "RelativePath": "api/DocumentTemplate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FlightDocSystem.ViewModels.DocumentTemplateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentTemplateController",
+    "Method": "GetById",
+    "RelativePath": "api/DocumentTemplate/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentTemplateController",
+    "Method": "Update",
+    "RelativePath": "api/DocumentTemplate/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "FlightDocSystem.ViewModels.DocumentTemplateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.DocumentTemplateController",
+    "Method": "Delete",
+    "RelativePath": "api/DocumentTemplate/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightAssignmentsController",
+    "Method": "AssignUserToFlight",
+    "RelativePath": "api/FlightAssignments/assign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "flightId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightAssignmentsController",
+    "Method": "GetUsersByFlight",
+    "RelativePath": "api/FlightAssignments/flight/{flightId}/users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "flightId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightAssignmentsController",
+    "Method": "ImportAssignments",
+    "RelativePath": "api/FlightAssignments/import",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightAssignmentsController",
+    "Method": "IsUserAssigned",
+    "RelativePath": "api/FlightAssignments/is-assigned",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "flightId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightAssignmentsController",
+    "Method": "GetMyFlights",
+    "RelativePath": "api/FlightAssignments/me/flights",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightAssignmentsController",
+    "Method": "UnassignUserFromFlight",
+    "RelativePath": "api/FlightAssignments/unassign",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "flightId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightAssignmentsController",
+    "Method": "GetFlightsByUser",
+    "RelativePath": "api/FlightAssignments/user/{userId}/flights",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightDocumentsController",
+    "Method": "Get",
+    "RelativePath": "api/FlightDocuments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "flightId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightDocumentsController",
+    "Method": "Upload",
+    "RelativePath": "api/FlightDocuments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "flightId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Title",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CategoryId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Files",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightDocumentsController",
+    "Method": "Download",
+    "RelativePath": "api/FlightDocuments/{documentId}/download",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "documentId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.FlightDocumentsController",
+    "Method": "GetFiles",
+    "RelativePath": "api/FlightDocuments/{flightId}/files",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "flightId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
     "ContainingType": "FlightDocSystem.Controllers.FlightController",
     "Method": "AddFlight",
     "RelativePath": "api/flights",
@@ -227,6 +571,66 @@
     "ReturnTypes": []
   },
   {
+<<<<<<< HEAD
+=======
+    "ContainingType": "FlightDocSystem.Controllers.TestVideoController",
+    "Method": "DebugPath",
+    "RelativePath": "api/TestVideo/debug-path",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.TestVideoController",
+    "Method": "GetMasterPlaylist",
+    "RelativePath": "api/TestVideo/m3u8/{videoName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "videoName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.TestVideoController",
+    "Method": "FragmentAllMp4",
+    "RelativePath": "api/TestVideo/segment-all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FlightDocSystem.Controllers.TestVideoController",
+    "Method": "GetSegment",
+    "RelativePath": "api/TestVideo/segment/{videoName}/{segmentFile}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "videoName",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "segmentFile",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
     "ContainingType": "FlightDocSystem.Controllers.UserController",
     "Method": "GetAllUserAsync",
     "RelativePath": "api/User",

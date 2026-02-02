@@ -23,6 +23,8 @@ namespace FlightDocSystem.Service
                 Id = Guid.NewGuid(),
                 FlightNumber = flight.FlightNumber,
                 FlightDate = flight.FlightDate,
+                PointOfLoading = flight.PointOfLoading,
+                PointOfUnLoading = flight.PointOfUnloading
             };
             _context.Flights.Add(newFlight);
             _context.SaveChanges();
@@ -42,7 +44,10 @@ namespace FlightDocSystem.Service
                     .Select(f => new FlightResponse
                     {
                         FlightNumber = f.FlightNumber,
-                        FlightDate = f.FlightDate
+                        FlightDate = f.FlightDate,
+                        Departure = f.PointOfLoading,
+                        Destination = f.PointOfUnLoading
+
                     })
                     .ToListAsync();
             });
@@ -58,7 +63,9 @@ namespace FlightDocSystem.Service
                 .Select(f => new FlightResponse
                 {
                     FlightNumber = f.FlightNumber,
-                    FlightDate = f.FlightDate
+                    FlightDate = f.FlightDate,
+                    Departure = f.PointOfLoading,
+                    Destination = f.PointOfUnLoading
                 }).ToListAsync();
             return flights;
         }
@@ -80,7 +87,9 @@ namespace FlightDocSystem.Service
                     .Select(f => new FlightResponse
                     {
                         FlightNumber = f.FlightNumber,
-                        FlightDate = f.FlightDate
+                        FlightDate = f.FlightDate,
+                        Departure = f.PointOfLoading,
+                        Destination = f.PointOfUnLoading
                     })
                     .FirstOrDefaultAsync();
 

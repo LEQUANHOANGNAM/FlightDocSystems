@@ -36,6 +36,222 @@
         }
       }
     },
+<<<<<<< HEAD
+=======
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/ping": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentCategories": {
+      "get": {
+        "tags": [
+          "DocumentCategories"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentCategories"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDocumentCategoryDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDocumentCategoryDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDocumentCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentCategories/{id}/disable": {
+      "put": {
+        "tags": [
+          "DocumentCategories"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentTemplate": {
+      "get": {
+        "tags": [
+          "DocumentTemplate"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentTemplate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentTemplateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentTemplateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentTemplate/{id}": {
+      "get": {
+        "tags": [
+          "DocumentTemplate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentTemplate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentTemplateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentTemplateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DocumentTemplate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
     "/api/flights": {
       "post": {
         "tags": [
@@ -172,6 +388,313 @@
         }
       }
     },
+<<<<<<< HEAD
+=======
+    "/api/FlightAssignments/assign": {
+      "post": {
+        "tags": [
+          "FlightAssignments"
+        ],
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightAssignments/unassign": {
+      "delete": {
+        "tags": [
+          "FlightAssignments"
+        ],
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightAssignments/is-assigned": {
+      "get": {
+        "tags": [
+          "FlightAssignments"
+        ],
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightAssignments/flight/{flightId}/users": {
+      "get": {
+        "tags": [
+          "FlightAssignments"
+        ],
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightAssignments/user/{userId}/flights": {
+      "get": {
+        "tags": [
+          "FlightAssignments"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightAssignments/me/flights": {
+      "get": {
+        "tags": [
+          "FlightAssignments"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightAssignments/import": {
+      "post": {
+        "tags": [
+          "FlightAssignments"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightDocuments": {
+      "get": {
+        "tags": [
+          "FlightDocuments"
+        ],
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FlightDocuments"
+        ],
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Title": {
+                    "type": "string"
+                  },
+                  "CategoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Title": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                },
+                "Files": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightDocuments/{documentId}/download": {
+      "get": {
+        "tags": [
+          "FlightDocuments"
+        ],
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FlightDocuments/{flightId}/files": {
+      "get": {
+        "tags": [
+          "FlightDocuments"
+        ],
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
     "/api/Permission": {
       "get": {
         "tags": [
@@ -371,6 +894,85 @@
         }
       }
     },
+<<<<<<< HEAD
+=======
+    "/api/TestVideo/segment-all": {
+      "get": {
+        "tags": [
+          "TestVideo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TestVideo/m3u8/{videoName}": {
+      "get": {
+        "tags": [
+          "TestVideo"
+        ],
+        "parameters": [
+          {
+            "name": "videoName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TestVideo/segment/{videoName}/{segmentFile}": {
+      "get": {
+        "tags": [
+          "TestVideo"
+        ],
+        "parameters": [
+          {
+            "name": "videoName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "segmentFile",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TestVideo/debug-path": {
+      "get": {
+        "tags": [
+          "TestVideo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
     "/api/User": {
       "get": {
         "tags": [
@@ -558,6 +1160,27 @@
         },
         "additionalProperties": false
       },
+<<<<<<< HEAD
+=======
+      "CreateDocumentCategoryDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
       "CreatePermissionRequest": {
         "required": [
           "code"
@@ -621,6 +1244,27 @@
         },
         "additionalProperties": false
       },
+<<<<<<< HEAD
+=======
+      "DocumentTemplateDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
       "FlightRequest": {
         "type": "object",
         "properties": {
@@ -631,6 +1275,17 @@
           "flightDate": {
             "type": "string",
             "format": "date-time"
+<<<<<<< HEAD
+=======
+          },
+          "pointOfLoading": {
+            "type": "string",
+            "nullable": true
+          },
+          "pointOfUnloading": {
+            "type": "string",
+            "nullable": true
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
           }
         },
         "additionalProperties": false
@@ -693,7 +1348,11 @@
     "securitySchemes": {
       "Bearer": {
         "type": "http",
+<<<<<<< HEAD
         "description": "Nhập token vào đây ",
+=======
+        "description": "Bearer {token}",
+>>>>>>> 4e87abf1eb94e3a53991f6bfe1db58bef5f5d496
         "scheme": "Bearer",
         "bearerFormat": "JWT"
       }

@@ -3,15 +3,21 @@ using FlightDocSystem.Service;
 using FlightDocSystem.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models; // Cần thêm cái này để cấu hình Swagger
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ===================== DB =====================
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
 
+// ===================== SERVICES =====================
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -21,14 +27,22 @@ builder.Services.AddScoped<IRoleSVC, RoleSVC>();
 builder.Services.AddScoped<IPermissionSVC, PermissionSVC>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IFlightSvc, FlightSvc>();
+builder.Services.AddScoped<IFileStorageService, FileStorageService>();
+builder.Services.AddScoped<IFlightDocumentService, FlightDocumentService>();
+builder.Services.AddScoped<IDocumentCategoryService, DocumentCategoryService>();    
+builder.Services.AddScoped<IFlightAssignmentService,FlightAssignmentService>();
+builder.Services.AddMemoryCache();
+builder.Services.AddAuthorization();
 
-// 3. CẤU HÌNH SWAGGER ĐỂ HIỆN NÚT Ổ KHÓA (Authorize)
-// (Phần này bạn đang thiếu nên không test được Token)
+// ===================== SWAGGER =====================
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "FlightDocSystem API", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "FlightDocSystem API",
+        Version = "v1"
+    });
 
-    // Định nghĩa bảo mật là Bearer Token
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -36,10 +50,9 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Nhập token vào đây "
+        Description = "Bearer {token}"
     });
 
-    // Yêu cầu Swagger sử dụng bảo mật này
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -51,46 +64,87 @@ builder.Services.AddSwaggerGen(options =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 });
 
-builder.Services.AddMemoryCache();
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+// ===================== AUTH =====================
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.RequireHttpsMetadata = false;
         options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters()
+
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
 
-            ValidAudience = builder.Configuration["Jwt:Audience"],
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            ValidAudience = builder.Configuration["Jwt:Audience"],
 
-            ClockSkew = TimeSpan.Zero 
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+            ),
+
+            ClockSkew = TimeSpan.Zero
         };
-    }); 
+
+        // 🔥 CHECK TOKEN REVOKED
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = async context =>
+            {
+                var cache = context.HttpContext.RequestServices
+                    .GetRequiredService<IMemoryCache>();
+
+                var db = context.HttpContext.RequestServices
+                    .GetRequiredService<AppDbContext>();
+
+                var token = context.Request.Headers["Authorization"]
+                    .ToString()
+                    .Replace("Bearer ", "");
+
+                // memory
+                if (cache.TryGetValue(token, out _))
+                {
+                    context.Fail("Token revoked");
+                    return;
+                }
+
+                // database
+                var revoked = await db.RevokedTokens
+                    .AnyAsync(x => x.Token == token);
+
+                if (revoked)
+                {
+                    context.Fail("Token revoked");
+                }
+            },
+
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine("JWT FAILED:");
+                Console.WriteLine(context.Exception);
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 var app = builder.Build();
 
-// 6. PIPELINE (Thứ tự rất quan trọng)
+// ===================== PIPELINE =====================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseStaticFiles(); // Để hiển thị ảnh Avatar (nếu có)
 app.UseHttpsRedirection();
 
-// QUAN TRỌNG: Authentication phải đứng trước Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
