@@ -37,6 +37,17 @@ namespace FlightDocSystem.Controllers
             return Ok(await _roleSVC.GetAllRoleAsync());
         }
 
+        [HttpGet("{roleId}")]
+        public async Task<IActionResult> GetById(int roleId)
+        {
+            if (!IsAdmin()) return Forbid("Chỉ Admin mới được xem Role!");
+
+            var role = await _roleSVC.GetByIdAsync(roleId);
+            if (role == null) return NotFound();
+
+            return Ok(role);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateRoleRequest request)
         {

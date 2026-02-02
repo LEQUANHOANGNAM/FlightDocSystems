@@ -1,7 +1,6 @@
 ﻿using FlightDocSystem.Data;
 using FlightDocSystem.Models;
 using FlightDocSystem.ViewModels;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightDocSystem.Service
@@ -21,7 +20,7 @@ namespace FlightDocSystem.Service
 
             if (string.IsNullOrWhiteSpace(request.Code))
                 throw new Exception("Mã quyền là bắt buộc.");
-            bool exists = _DBContext.Permissions.Any(p => p.Code == request.Code);
+            bool exists = await _DBContext.Permissions.AnyAsync(p => p.Code == request.Code);
             if (exists)
             {
                 throw new Exception("Permission đã tồn tại.");
@@ -32,6 +31,43 @@ namespace FlightDocSystem.Service
                 Description = request.Description
             };
             _DBContext.Permissions.Add(permission);
+            await _DBContext.SaveChangesAsync();
+        }
+
+        public async Task<PermissionRequest?> GetByIdAsync(int id)
+        {
+            return await _DBContext.Permissions
+                .Where(p => p.Id == id)
+                .Select(p => new PermissionRequest
+                {
+                    Id = p.Id,
+                    Code = p.Code,
+                    Description = p.Description
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateAsync(int id, UpdatePermissionRequest request)
+        {
+            if (request == null) throw new Exception("Dữ liệu không hợp lệ.");
+            request.Code = request.Code?.Trim();
+            request.Description = request.Description?.Trim();
+
+            if (string.IsNullOrWhiteSpace(request.Code))
+                throw new Exception("Mã quyền là bắt buộc.");
+
+            var permission = await _DBContext.Permissions.FindAsync(id);
+            if (permission == null)
+                throw new Exception("Permission không tồn tại.");
+
+            bool codeExists = await _DBContext.Permissions
+                .AnyAsync(p => p.Code == request.Code && p.Id != id);
+            if (codeExists)
+                throw new Exception("Mã quyền đã tồn tại.");
+
+            permission.Code = request.Code;
+            permission.Description = request.Description;
+
             await _DBContext.SaveChangesAsync();
         }
 

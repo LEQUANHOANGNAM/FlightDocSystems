@@ -44,7 +44,7 @@ namespace FlightDocSystem.Service
 
         public async Task CreateAsync(CreateRoleRequest request)
         {
-            if (request == null) 
+            if (request == null)
             {
                 throw new Exception("Dữ liệu không hợp lệ.");
             }
@@ -98,6 +98,24 @@ namespace FlightDocSystem.Service
                 }).ToListAsync();
         }
 
+        public async Task<RoleRequest?> GetByIdAsync(int id)
+        {
+            return await _DBContext.Roles
+                .Include(r => r.RolePermissions)
+                    .ThenInclude(rp => rp.Permission)
+                .Where(r => r.Id == id)
+                .Select(r => new RoleRequest
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Description = r.Description,
+                    Permissions = r.RolePermissions
+                        .Select(rp => rp.Permission.Code)
+                        .ToList()
+                })
+                .FirstOrDefaultAsync();
+        }
+
         public async Task UpdateAsync(int id, UpdateRoleRequest request)
         {
             var role = await _DBContext.Roles.FindAsync(id);
@@ -115,8 +133,8 @@ namespace FlightDocSystem.Service
             }
 
             // Cập nhật thông tin
-            role.Name = request.Name;
-            role.Description = request.Description;
+            role.Name = request.Name?.Trim();
+            role.Description = request.Description?.Trim();
 
             await _DBContext.SaveChangesAsync();
         }

@@ -37,6 +37,17 @@ namespace FlightDocSystem.Controllers
             return Ok(await _permissionSVC.GetAllPermissionsAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            if (!IsAdmin()) return Forbid("Chỉ Admin mới được xem quyền hạn!");
+
+            var permission = await _permissionSVC.GetByIdAsync(id);
+            if (permission == null) return NotFound();
+
+            return Ok(permission);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreatePermissionRequest request)
         {
@@ -46,6 +57,22 @@ namespace FlightDocSystem.Controllers
             {
                 await _permissionSVC.CreatePermission(request);
                 return Ok(new { message = "Tạo quyền thành công" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdatePermissionRequest request)
+        {
+            if (!IsAdmin()) return Forbid("Chỉ Admin mới được sửa quyền!");
+
+            try
+            {
+                await _permissionSVC.UpdateAsync(id, request);
+                return Ok(new { message = "Cập nhật quyền thành công" });
             }
             catch (Exception ex)
             {
