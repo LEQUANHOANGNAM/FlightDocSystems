@@ -15,6 +15,12 @@ namespace FlightDocSystem.Service
         }
         public async Task CreatePermission(CreatePermissionRequest request)
         {
+            if (request == null) throw new Exception("Dữ liệu không hợp lệ.");
+            request.Code = request.Code?.Trim();
+            request.Description = request.Description?.Trim();
+
+            if (string.IsNullOrWhiteSpace(request.Code))
+                throw new Exception("Mã quyền là bắt buộc.");
             bool exists = _DBContext.Permissions.Any(p => p.Code == request.Code);
             if (exists)
             {

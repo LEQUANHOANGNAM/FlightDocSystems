@@ -9,9 +9,8 @@ namespace FlightDocSystem.Service
     public class UserSVC : IUserSVC
     {
         private readonly AppDbContext _DBContext;
-        private readonly IWebHostEnvironment _env; // 1. Thêm cái này để xử lý đường dẫn file
+        private readonly IWebHostEnvironment _env;
 
-        // 2. Tiêm vào Constructor
         public UserSVC(AppDbContext dbContext, IWebHostEnvironment env)
         {
             _DBContext = dbContext;
@@ -20,6 +19,11 @@ namespace FlightDocSystem.Service
 
         public async Task CreateAsync(CreateUserRequest request)
         {
+            if (request == null) 
+                throw new Exception("Dữ liệu không hợp lệ.");
+
+            request.FullName = request.FullName?.Trim();
+
             if (!request.Email.Trim().EndsWith("@vietjetair.com", StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception("Chỉ chấp nhận email của VietJet (@vietjetair.com)!");
@@ -27,12 +31,16 @@ namespace FlightDocSystem.Service
             if (await _DBContext.Users.AnyAsync(u => u.Email == request.Email))
                 throw new Exception("Email đã tồn tại.");
 
+            bool role = await _DBContext.Roles.AnyAsync(r => r.Id == request.RoleId);
+            if (!role) 
+                throw new Exception("RoleId không tồn tại.");
+
             var user = new User
             {
                 FullName = request.FullName,
                 Email = request.Email,
                 RoleId = request.RoleId,
-                Password = Md5Helper.Hash(request.Password), // Nhớ đảm bảo Md5Helper hoạt động tốt
+                Password = Md5Helper.Hash(request.Password),
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             };
@@ -57,11 +65,9 @@ namespace FlightDocSystem.Service
 
             if (user == null) return null;
 
-            // 3. Mapping dữ liệu cơ bản
-            // Lưu ý: Class UserRequest của bạn phải có các trường int? RoleId và bool? IsActive nhé
             var result = new UserRequest
             {
-                Id = user.Id, // Giữ nguyên ID của User
+                Id = user.Id, 
                 FullName = user.FullName,
                 Email = user.Email,
                 RoleName = user.Role != null ? user.Role.Name : "N/A", // Tránh lỗi null reference
@@ -87,7 +93,12 @@ namespace FlightDocSystem.Service
             var user = await _DBContext.Users.FindAsync(userId);
             if (user == null) throw new Exception("UserId không tồn tại.");
 
-            user.FullName = request.FullName;
+            if (!string.IsNullOrWhiteSpace(request.FullName))
+                user.FullName = request.FullName.Trim();
+
+            const long maxSizeBytes = 5 * 1024 * 1024; // 2MB
+            if (request.Avatar.Length > maxSizeBytes)
+                throw new Exception("Dung lượng ảnh tối đa 2MB.");
 
             if (request.Avatar != null)
             {
@@ -109,6 +120,16 @@ namespace FlightDocSystem.Service
                 if (!Directory.Exists(uploadFolder))
                 {
                     Directory.CreateDirectory(uploadFolder);
+                }
+
+                if (!string.IsNullOrWhiteSpace(user.AvatarPath))
+                {
+                    var oldRelative = user.AvatarPath.TrimStart('/')
+                        .Replace("/", Path.DirectorySeparatorChar.ToString());
+                    var oldFilePath = Path.Combine(webRootPath, oldRelative);
+
+                    if (File.Exists(oldFilePath))
+                        File.Delete(oldFilePath);
                 }
 
                 var fileName = $"Avatar_{userId}_{Guid.NewGuid()}{extension}";

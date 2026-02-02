@@ -20,6 +20,7 @@ namespace FlightDocSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUserAsync()
         {
             return Ok(await _userSVC.GetAllUsersAsync());

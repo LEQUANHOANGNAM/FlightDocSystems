@@ -18,24 +18,17 @@ namespace FlightDocSystem.Service
             var role = await _DBContext.Roles.FindAsync(roleId);
             if (role == null) throw new Exception("Vai trò không tồn tại.");
 
-            // 2. CHIẾN THUẬT: "XÓA HẾT CŨ - THÊM HẾT MỚI"
-            // Lấy tất cả dòng trong bảng trung gian thuộc về Role này
             var currentPerms = _DBContext.RolePermissions.Where(rp => rp.RoleId == roleId);
 
-            // Xóa sạch (Bulk Delete)
             _DBContext.RolePermissions.RemoveRange(currentPerms);
 
-            // 3. Thêm danh sách mới vào
             if (permissionIds != null && permissionIds.Count > 0)
             {
-                // Distinct(): Loại bỏ ID trùng nếu client lỡ gửi [1, 1, 2]
                 foreach (var permId in permissionIds.Distinct())
                 {
-                    // Kiểm tra xem PermissionId có tồn tại trong DB không (tránh lỗi khóa ngoại)
                     bool permExists = await _DBContext.Permissions.AnyAsync(p => p.Id == permId);
                     if (permExists)
                     {
-                        // Tạo liên kết mới
                         _DBContext.RolePermissions.Add(new RolePermission
                         {
                             RoleId = roleId,
@@ -51,6 +44,13 @@ namespace FlightDocSystem.Service
 
         public async Task CreateAsync(CreateRoleRequest request)
         {
+            if (request == null) 
+            {
+                throw new Exception("Dữ liệu không hợp lệ.");
+            }
+            request.Name = request.Name?.Trim();
+            request.Description = request.Description?.Trim();
+
             if (await _DBContext.Roles.AnyAsync(r => r.Name == request.Name))
             {
                 throw new Exception("Role đã tồn tại.");
@@ -64,13 +64,22 @@ namespace FlightDocSystem.Service
             await _DBContext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int RoleId)
+        public async Task DeleteAsync(int RoleId)
         {
             var role = _DBContext.Roles.Find(RoleId);
+
             if (role == null)
                 throw new Exception("Role này không tồn tại.");
+            bool isUser = await _DBContext.Users.AnyAsync(u => u.RoleId == RoleId);
+
+            if (isUser)
+                throw new Exception("Role đang được sử dụng, không thể xóa.");
+
+            var mappings = _DBContext.RolePermissions.Where(rp => rp.RoleId == RoleId);
+            _DBContext.RolePermissions.RemoveRange(mappings);
+
             _DBContext.Roles.Remove(role);
-            return _DBContext.SaveChangesAsync();
+            await _DBContext.SaveChangesAsync();
         }
 
         public async Task<List<RoleRequest>> GetAllRoleAsync()
@@ -92,7 +101,18 @@ namespace FlightDocSystem.Service
         public async Task UpdateAsync(int id, UpdateRoleRequest request)
         {
             var role = await _DBContext.Roles.FindAsync(id);
-            if (role == null) throw new Exception("Vai trò không tồn tại.");
+            if (role == null) throw new Exception("Role không tồn tại.");
+
+            if (request == null)
+            {
+                throw new Exception("Dữ liệu không hợp lệ.");
+            }
+
+            bool NameRole = await _DBContext.Roles.AnyAsync(r => r.Name == request.Name && r.Id != id);
+            if (NameRole)
+            {
+                throw new Exception("Role đã tồn tại.");
+            }
 
             // Cập nhật thông tin
             role.Name = request.Name;

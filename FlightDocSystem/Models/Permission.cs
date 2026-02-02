@@ -6,7 +6,7 @@ namespace FlightDocSystem.Models
     {
         [Key]
         public int Id { get; set; }
-        [MaxLength(10)]
+        [MaxLength(50)]
         public string Code { get; set; }
         [MaxLength(100)]
         public string Description { get; set; }

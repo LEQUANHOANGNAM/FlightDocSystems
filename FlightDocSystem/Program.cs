@@ -1,7 +1,6 @@
 ﻿using FlightDocSystem.Data;
 using FlightDocSystem.Service;
-using FlightDocSystem.Services;
-using FlightDocSystem.Services.Implementations; 
+using FlightDocSystem.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -21,6 +20,7 @@ builder.Services.AddScoped<IUserSVC, UserSVC>();
 builder.Services.AddScoped<IRoleSVC, RoleSVC>();
 builder.Services.AddScoped<IPermissionSVC, PermissionSVC>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IFlightSvc, FlightSvc>();
 
 // 3. CẤU HÌNH SWAGGER ĐỂ HIỆN NÚT Ổ KHÓA (Authorize)
 // (Phần này bạn đang thiếu nên không test được Token)
@@ -76,12 +76,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             ClockSkew = TimeSpan.Zero 
         };
-    });
-
-
-// Services
-builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+    }); 
 
 var app = builder.Build();
 
