@@ -136,7 +136,6 @@ builder.Services
 
 var app = builder.Build();
 
-// ===================== PIPELINE =====================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -144,6 +143,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();

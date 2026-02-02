@@ -7,6 +7,7 @@ namespace FlightDocSystem.Service
         Task CreateAsync(CreateRoleRequest request);
         Task UpdateAsync(int id, UpdateRoleRequest request);
         Task DeleteAsync(int RoleId);
+        
         Task AssignPermissionsAsync(int roleId, List<int> permissionIds);
     }
 }

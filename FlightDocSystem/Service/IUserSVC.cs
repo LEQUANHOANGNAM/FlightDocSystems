@@ -10,5 +10,6 @@ namespace FlightDocSystem.Service
         Task CreateAsync(CreateUserRequest request);
         Task UpdateAsync(int userId, UpdateUserRequest request, string currentUserRole);
         Task DeleteAsync(int userId);
+        Task ChangePasswordAsync(int userId, ChangePasswordRequest request);
     }
 }

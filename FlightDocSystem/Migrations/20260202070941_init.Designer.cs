@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlightDocSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260201114954_initialDb")]
-    partial class initialDb
+    [Migration("20260202070941_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
